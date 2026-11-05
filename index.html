@@ -376,7 +376,12 @@ setInterval(()=>{if(document.visibilityState==='visible'&&EMP)sync()},45000);
 
 /* ---------- Login ---------- */
 let fails=0,lockUntil=0;
-const authErr=e=>{const m=(e&&e.message)||'';if(/invalid login/i.test(m))return 'E-mail ou senha incorretos.';if(/not confirmed/i.test(m))return 'Este e-mail ainda não foi confirmado.';
+// Login curto: "Cantinho@sistema" vira o e-mail interno "cantinho@sistema.com"
+const SIS='sistema.com';
+function loginToEmail(x){x=String(x||'').trim().toLowerCase().replace(/\s+/g,'');if(!x)return x;if(!x.includes('@'))x+='@sistema';const d=x.split('@')[1]||'';if(!d.includes('.'))x+='.com';return x}
+const isSis=e=>String(e||'').toLowerCase().endsWith('@'+SIS);
+const showLogin=e=>isSis(e)?e.replace('@'+SIS,'@sistema').replace(/^./,c=>c.toUpperCase()):e;
+const authErr=e=>{const m=(e&&e.message)||'';if(/invalid login/i.test(m))return 'Login ou senha incorretos.';if(/not confirmed/i.test(m))return 'Este e-mail ainda não foi confirmado.';
   if(/fetch|network|load failed/i.test(m)||!navigator.onLine)return 'Sem conexão com a internet. Verifique e tente de novo.';if(/rate|too many/i.test(m))return 'Muitas tentativas. Aguarde alguns minutos.';return 'Não foi possível concluir: '+m};
 function authView(mode,opt){
   $('#app').hidden=true;const el=$('#auth');el.hidden=false;opt=opt||{};
@@ -387,7 +392,7 @@ function authView(mode,opt){
     $('#mA').onclick=()=>opt.reload?location.reload():boot();$('#mB')&&($('#mB').onclick=logout);return}
   if(mode==='login'){
     el.innerHTML=`<form class="auth-card" id="f">${logo}<h1>Entrar</h1>
-      <div class="field"><label for="u">E-mail</label><input class="inp" id="u" type="email" autocomplete="username" inputmode="email" required value="${esc(load('cc2_lastEmail',''))}"></div>
+      <div class="field"><label for="u">Login</label><input class="inp" id="u" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Ex.: Cantinho@sistema" required value="${esc(showLogin(load('cc2_lastEmail','')))}"></div>
       <div class="field"><label for="p">Senha</label><input class="inp" id="p" type="password" autocomplete="current-password" required></div>
       <div class="err" id="e"></div><button class="btn pri block" id="go">Entrar</button>
       <button type="button" class="link" id="forgot">Esqueci a senha</button></form>`;
@@ -395,21 +400,23 @@ function authView(mode,opt){
     $('#forgot').onclick=()=>authView('forgot',{email:$('#u').value});
     $('#f').onsubmit=async ev=>{ev.preventDefault();
       if(Date.now()<lockUntil)return $('#e').textContent='Muitas tentativas. Aguarde '+Math.ceil((lockUntil-Date.now())/1000)+' segundos.';
-      const email=$('#u').value.trim().toLowerCase();$('#go').disabled=true;$('#e').textContent='';
+      const email=loginToEmail($('#u').value);$('#go').disabled=true;$('#e').textContent='';
       const {data,error}=await SB.auth.signInWithPassword({email,password:$('#p').value}).catch(e=>({error:e}));
       $('#go').disabled=false;
       if(error){fails++;if(fails>=5){lockUntil=Date.now()+30000;fails=0}$('#e').textContent=authErr(error);$('#p').value='';$('#p').focus();return}
       fails=0;store('cc2_lastEmail',email);afterLogin(data.session)};
     return}
   if(mode==='forgot'){
-    el.innerHTML=`<form class="auth-card" id="f">${logo}<h1>Recuperar senha</h1><p class="muted" style="margin:0">Enviaremos um link para o seu e-mail. Abra o link neste aparelho para criar uma senha nova.</p>
-      <div class="field"><label for="u">E-mail</label><input class="inp" id="u" type="email" autocomplete="username" required value="${esc(opt.email||'')}"></div>
+    el.innerHTML=`<form class="auth-card" id="f">${logo}<h1>Recuperar senha</h1><p class="muted" style="margin:0">Se o seu acesso for por e-mail, enviaremos um link para criar uma senha nova. Logins do tipo “Nome@sistema” são redefinidos pelo administrador do sistema.</p>
+      <div class="field"><label for="u">Login ou e-mail</label><input class="inp" id="u" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required value="${esc(opt.email||'')}"></div>
       <div class="err" id="e"></div><button class="btn pri block" id="go">Enviar link</button><button type="button" class="link" id="back">Voltar</button></form>`;
     $('#back').onclick=()=>authView('login');
-    $('#f').onsubmit=async ev=>{ev.preventDefault();const email=$('#u').value.trim().toLowerCase();$('#go').disabled=true;
+    $('#f').onsubmit=async ev=>{ev.preventDefault();const email=loginToEmail($('#u').value);
+      if(isSis(email)){el.innerHTML=`<div class="auth-card">${logo}<h1>Fale com o administrador</h1><p class="muted" style="margin:0">O login <b>${esc(showLogin(email))}</b> não tem e-mail para recuperação. Peça ao administrador do sistema para criar uma senha nova para você.</p><button class="btn block" id="back">Voltar para o login</button></div>`;$('#back').onclick=()=>authView('login');return}
+      $('#go').disabled=true;
       const {error}=await SB.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname}).catch(e=>({error:e}));$('#go').disabled=false;
       if(error)return $('#e').textContent=authErr(error);
-      el.innerHTML=`<div class="auth-card">${logo}<h1>Confira seu e-mail</h1><p class="muted" style="margin:0">Se <b>${esc(email)}</b> tiver acesso ao sistema, você vai receber um link em alguns minutos. Olhe também a caixa de spam.</p><button class="btn block" id="back">Voltar para o login</button></div>`;
+      el.innerHTML=`<div class="auth-card">${logo}<h1>Confira seu e-mail</h1><p class="muted" style="margin:0">Se <b>${esc(showLogin(email))}</b> tiver acesso ao sistema, você vai receber um link em alguns minutos. Olhe também a caixa de spam.</p><button class="btn block" id="back">Voltar para o login</button></div>`;
       $('#back').onclick=()=>authView('login')};
     return}
   if(mode==='newpass'){
@@ -433,7 +440,7 @@ async function afterLogin(session){
   try{const {data,error}=await SB.from('membros').select('empresa_id,papel,empresas(id,nome,slug)').eq('user_id',USER.id);if(error)throw error;
     const m=(data||[]).find(x=>x.empresas&&x.empresas.slug===EMPRESA_SLUG);emp=m?{id:m.empresa_id,nome:m.empresas.nome}:null;store(ck,emp)}
   catch(e){online=false}
-  if(!emp)return authView('msg',online?{t:'Acesso não liberado',m:`O usuário ${USER.email} ainda não está ligado ao Cantinho Caseiro. Peça ao administrador do sistema para liberar o acesso.`,out:true}
+  if(!emp)return authView('msg',online?{t:'Acesso não liberado',m:`O usuário ${showLogin(USER.email)} ainda não está ligado ao Cantinho Caseiro. Peça ao administrador do sistema para liberar o acesso.`,out:true}
     :{t:'Sem conexão',m:'Conecte-se à internet para entrar pela primeira vez neste aparelho.',out:true});
   EMP=emp;loadLocal();start();sync();offerLegacy()}
 function offerLegacy(){if(META.legacyDone)return;META.legacyDone=true;saveMeta();
@@ -504,7 +511,7 @@ function start(){
   $('#side').innerHTML=`<div class="brand"><img src="${LOGO}" alt="Cantinho Caseiro"></div>
     ${VIEWS.map(([k,n])=>`<button class="nav" data-v="${k}">${svg(k,20)}<span>${n}</span>${k==='contas'?'<span class="dot" data-badge hidden></span>':''}</button>`).join('')}
     <button class="btn add" id="addSide">${svg('plus',18)} Novo lançamento</button>
-    <div class="foot"><button class="sync" data-sync><i></i><span></span></button><span>Conectado como <b>${esc(USER.email)}</b></span><button id="outSide">Sair do sistema</button></div>`;
+    <div class="foot"><button class="sync" data-sync><i></i><span></span></button><span>Conectado como <b>${esc(showLogin(USER.email))}</b></span><button id="outSide">Sair do sistema</button></div>`;
   $('#tabs').innerHTML=VIEWS.map(([k,n])=>`<button class="tab" data-v="${k}">${svg(k)}<span>${n}</span>${k==='contas'?'<span class="dot" data-badge hidden></span>':''}</button>`).join('');
   document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>go(b.dataset.v));
   $('#fab').onclick=$('#addSide').onclick=()=>form();
@@ -682,7 +689,7 @@ function vAjustes(m){
   m.innerHTML=`<div class="head"><h2>Ajustes</h2></div>
   <section class="card"><h3>Nuvem e acesso</h3><div class="set">
     <div class="setrow"><div class="t"><b>Sincronização</b><span id="syncInfo"></span></div><button class="btn" id="syncNow">Sincronizar agora</button></div>
-    <div class="setrow"><div class="t"><b>${esc(USER.email)}</b><span>${esc(EMP.nome)} · ${reais} lançamento(s) na nuvem</span></div><button class="btn" id="pw">Trocar senha</button></div>
+    <div class="setrow"><div class="t"><b>${esc(showLogin(USER.email))}</b><span>${esc(EMP.nome)} · ${reais} lançamento(s) na nuvem</span></div><button class="btn" id="pw">Trocar senha</button></div>
     <div class="setrow"><div class="t"><b>Sair do sistema</b><span>Pede e-mail e senha na próxima vez neste aparelho.</span></div><button class="btn" id="out2">Sair</button></div>
   </div></section>
   <section class="card"><h3>Backup e importação</h3><div class="set">
