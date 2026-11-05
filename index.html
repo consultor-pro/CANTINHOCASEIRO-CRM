@@ -199,6 +199,8 @@ main{padding-block:16px 120px;padding-left:max(16px,env(safe-area-inset-left,0px
 .opt{display:grid;gap:4px;text-align:left;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;width:100%}
 .opt:hover{border-color:var(--gold);background:var(--gold-soft)}
 .opt span{font-size:13px;color:var(--muted)}
+.steps{margin:0;padding-left:20px;display:grid;gap:8px}
+.steps li{padding-left:4px}
 /* ---------- Sheet / modal ---------- */
 .ov{position:fixed;inset:0;z-index:50;background:rgba(15,12,8,.5);display:flex;align-items:flex-end;justify-content:center}
 @media (min-width:700px){.ov{align-items:center;padding:24px}}
@@ -237,6 +239,7 @@ main{padding-block:16px 120px;padding-left:max(16px,env(safe-area-inset-left,0px
       <div class="mark"><img src="data:image/jpeg;base64,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" alt=""></div>
       <div class="t">Cantinho Caseiro<small>Controle financeiro</small></div>
       <div class="sp"></div>
+      <button class="iconbtn" data-install aria-label="Instalar app" title="Instalar app" hidden><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button>
       <button class="sync" data-sync aria-label="Status da sincronização"><i></i><span></span></button>
       <button class="iconbtn" id="lockBtn" aria-label="Sair"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></button>
     </header>
@@ -395,7 +398,9 @@ function authView(mode,opt){
       <div class="field"><label for="u">Login</label><input class="inp" id="u" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Ex.: Cantinho@sistema" required value="${esc(showLogin(load('cc2_lastEmail','')))}"></div>
       <div class="field"><label for="p">Senha</label><input class="inp" id="p" type="password" autocomplete="current-password" required></div>
       <div class="err" id="e"></div><button class="btn pri block" id="go">Entrar</button>
-      <button type="button" class="link" id="forgot">Esqueci a senha</button></form>`;
+      <button type="button" class="link" id="forgot">Esqueci a senha</button>
+      <button type="button" class="btn block" data-install hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Instalar como app</button></form>`;
+    paintInstall();
     ($('#u').value?$('#p'):$('#u')).focus();
     $('#forgot').onclick=()=>authView('forgot',{email:$('#u').value});
     $('#f').onsubmit=async ev=>{ev.preventDefault();
@@ -511,12 +516,14 @@ function start(){
   $('#side').innerHTML=`<div class="brand"><img src="${LOGO}" alt="Cantinho Caseiro"></div>
     ${VIEWS.map(([k,n])=>`<button class="nav" data-v="${k}">${svg(k,20)}<span>${n}</span>${k==='contas'?'<span class="dot" data-badge hidden></span>':''}</button>`).join('')}
     <button class="btn add" id="addSide">${svg('plus',18)} Novo lançamento</button>
+    <button class="nav" data-install hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>Instalar app</span></button>
     <div class="foot"><button class="sync" data-sync><i></i><span></span></button><span>Conectado como <b>${esc(showLogin(USER.email))}</b></span><button id="outSide">Sair do sistema</button></div>`;
   $('#tabs').innerHTML=VIEWS.map(([k,n])=>`<button class="tab" data-v="${k}">${svg(k)}<span>${n}</span>${k==='contas'?'<span class="dot" data-badge hidden></span>':''}</button>`).join('');
   document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>go(b.dataset.v));
   $('#fab').onclick=$('#addSide').onclick=()=>form();
   $('#lockBtn').onclick=$('#outSide').onclick=logout;
   document.querySelectorAll('[data-sync]').forEach(b=>b.onclick=()=>{toast(syncText());sync()});
+  paintInstall();
   render();
 }
 function go(v){UI.view=v;saveUI();render();window.scrollTo(0,0)}
@@ -525,7 +532,7 @@ function render(){
   const n=urgentes().length;document.querySelectorAll('[data-badge]').forEach(d=>{d.hidden=!n;d.textContent=n});
   const m=$('#main');({painel:vPainel,lanc:vLanc,contas:vContas,rel:vRel,ajustes:vAjustes}[UI.view]||vPainel)(m);
   if(UI.view!=='ajustes'){const bk=bkBanner();if(bk){m.insertAdjacentHTML('afterbegin',bk);m.querySelector('[data-bk]').onclick=backup}}
-  paintSync();
+  paintSync();paintInstall();
 }
 const monthPicker=()=>`<div class="month"><button data-m="-1" aria-label="Mês anterior">‹</button><span>${mesNome(UI.mes)}</span><button data-m="1" aria-label="Próximo mês">›</button></div>`;
 function bindMonth(){document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{UI.mes=addMonth(UI.mes,+b.dataset.m);render()})}
@@ -690,6 +697,7 @@ function vAjustes(m){
   <section class="card"><h3>Nuvem e acesso</h3><div class="set">
     <div class="setrow"><div class="t"><b>Sincronização</b><span id="syncInfo"></span></div><button class="btn" id="syncNow">Sincronizar agora</button></div>
     <div class="setrow"><div class="t"><b>${esc(showLogin(USER.email))}</b><span>${esc(EMP.nome)} · ${reais} lançamento(s) na nuvem</span></div><button class="btn" id="pw">Trocar senha</button></div>
+    <div class="setrow" data-install-row hidden><div class="t"><b>Instalar como app</b><span>Abre em tela cheia, com o ícone do Cantinho na tela inicial.</span></div><button class="btn" data-install>Instalar app</button></div>
     <div class="setrow"><div class="t"><b>Sair do sistema</b><span>Pede e-mail e senha na próxima vez neste aparelho.</span></div><button class="btn" id="out2">Sair</button></div>
   </div></section>
   <section class="card"><h3>Backup e importação</h3><div class="set">
@@ -707,7 +715,7 @@ function vAjustes(m){
   <section class="card"><h3>Formas de pagamento</h3><div class="catlist">${DB.formas.map((f,i)=>`<span class="catchip">${esc(f)}<button data-delf="${i}" aria-label="Remover ${esc(f)}">×</button></span>`).join('')}</div>
     <form class="filters" id="addF" style="margin-top:12px"><input class="inp" id="nfN" placeholder="Nova forma (ex.: Sodexo)" required><button class="btn">Adicionar</button></form></section>
   <section class="card"><h3>Zona de cuidado</h3><div class="setrow" style="border:0"><div class="t"><b>Apagar todos os lançamentos</b><span>Remove da nuvem e de todos os aparelhos. Faça um Backup Agora antes.</span></div><button class="btn danger" id="wipe">Apagar tudo</button></div></section>`;
-  paintSync();
+  paintSync();paintInstall();
   $('#syncNow').onclick=()=>sync();
   $('#xls').onclick=exportXLS;$('#bk').onclick=backup;
   $('#imp').onchange=e=>{const f=e.target.files[0];if(f)importFile(f);e.target.value=''};
@@ -851,6 +859,25 @@ async function boot(){
   authView('loading');let session=null;try{session=(await SB.auth.getSession()).data.session}catch(e){}
   if(recovering){if(session)authView('newpass');else authView('login');return}
   if(session)afterLogin(session);else authView('login')}
+/* ---------- Instalar como app ---------- */
+let installEvt=null;
+const isStandalone=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}};
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;paintInstall()});
+window.addEventListener('appinstalled',()=>{installEvt=null;toast('App instalado');paintInstall()});
+function paintInstall(){const show=!isStandalone();
+  document.querySelectorAll('[data-install]').forEach(b=>{b.hidden=!show;b.onclick=installApp});
+  document.querySelectorAll('[data-install-row]').forEach(r=>r.hidden=!show)}
+async function installApp(){
+  if(installEvt){const ev=installEvt;installEvt=null;ev.prompt();try{const r=await ev.userChoice;if(r.outcome==='accepted')toast('Instalando o app…')}catch(e){}paintInstall();return}
+  const ios=isIOS(),android=/android/i.test(navigator.userAgent);
+  const passos=ios?`<ol class="steps"><li>Abra este endereço no <b>Safari</b>. No Chrome do iPhone a opção não aparece.</li><li>Toque em <b>Compartilhar</b>, o quadrado com a seta para cima.</li><li>Toque em <b>Adicionar à Tela de Início</b> e depois em <b>Adicionar</b>.</li></ol>`
+    :android?`<ol class="steps"><li>Toque nos <b>três pontinhos</b> no canto superior direito do Chrome.</li><li>Toque em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>.</li><li>Confirme em <b>Instalar</b>.</li></ol>`
+    :`<ol class="steps"><li>Na barra de endereço do Chrome ou do Edge, clique no ícone de <b>instalar</b> (um monitor com uma seta).</li><li>Se não aparecer, abra o menu <b>⋮</b> e escolha <b>Instalar Cantinho</b> ou <b>Aplicativos → Instalar este site como aplicativo</b>.</li></ol>`;
+  const close=openLayer(`<div class="sheet"><header><h3>Instalar como app</h3><button type="button" class="iconbtn" id="ix" aria-label="Fechar" style="color:var(--ink)">${svg('x')}</button></header>
+    <p class="muted" style="margin:0">O Cantinho Caseiro vira um aplicativo com o ícone do restaurante, abrindo em tela cheia.</p>${passos}
+    <button class="btn pri block" id="iok">Entendi</button></div>`);
+  $('#ix').onclick=$('#iok').onclick=close}
 boot();
 if('serviceWorker' in navigator&&location.protocol==='https:'&&!/claude/.test(location.hostname)){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
 </script>
