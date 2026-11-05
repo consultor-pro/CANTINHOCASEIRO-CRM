@@ -1,60 +1,6 @@
-// Service Worker do CRM
-// Guarda uma cópia do app no dispositivo para ele abrir mesmo sem internet.
-//
-// IMPORTANTE: toda vez que você atualizar o index.html e subir uma nova
-// versão, mude o número abaixo (ex: 'elo-crm-v3'). Isso força o navegador
-// a baixar a versão nova em vez de continuar usando a cópia antiga salva.
-const CACHE_NAME = 'elo-crm-v26';
-
-const ARQUIVOS_ESSENCIAIS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-180.png'
-];
-
-// Ao instalar o Service Worker, guarda uma cópia dos arquivos essenciais
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ARQUIVOS_ESSENCIAIS))
-  );
-});
-
-// Ao ativar, apaga versões antigas de cache que tenham ficado pra trás
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((nomes) =>
-      Promise.all(
-        nomes
-          .filter((nome) => nome !== CACHE_NAME)
-          .map((nome) => caches.delete(nome))
-      )
-    ).then(() => self.clients.claim())
-  );
-});
-
-// Estratégia: tenta buscar na internet primeiro (pra sempre pegar a versão
-// mais nova quando tiver conexão); se não conseguir (offline), usa a cópia
-// salva localmente. Toda resposta boa da internet também é salva de novo.
-self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
-
-  event.respondWith(
-    fetch(event.request)
-      .then((respostaRede) => {
-        const copia = respostaRede.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copia));
-        return respostaRede;
-      })
-      .catch(() =>
-        caches.match(event.request).then((respostaCache) => {
-          if (respostaCache) return respostaCache;
-          if (event.request.mode === 'navigate') return caches.match('./index.html');
-          return new Response('Offline e sem cópia salva deste arquivo.', { status: 503 });
-        })
-      )
-  );
-});
+const C='cantinho-v1';
+const A=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./icon-180.png'];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(A)));self.skipWaiting()});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))));self.clients.claim()});
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;
+  e.respondWith(fetch(e.request).then(r=>{if(r.ok&&new URL(e.request.url).origin===location.origin){const c=r.clone();caches.open(C).then(x=>x.put(e.request,c))}return r}).catch(()=>caches.match(e.request).then(r=>r||caches.match('./index.html'))))});

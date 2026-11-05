@@ -1,12 +1,12 @@
 {
-  "name": "CRM Militão · Elo CRM",
-  "short_name": "CRM Militão",
+  "name": "Cantinho Caseiro — Controle Financeiro",
+  "short_name": "Cantinho",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "any",
-  "background_color": "#3A0A12",
-  "theme_color": "#0d1117",
+  "background_color": "#1c1a17",
+  "theme_color": "#1c1a17",
+  "lang": "pt-BR",
   "icons": [
     {
       "src": "icon-192.png",
@@ -19,12 +19,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ]
 }
