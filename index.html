@@ -182,12 +182,23 @@ main{padding-block:16px 120px;padding-left:max(16px,env(safe-area-inset-left,0px
 .setrow:last-child{border-bottom:0}
 .setrow .t{flex:1;min-width:180px}
 .setrow .t span{display:block;font-size:13px;color:var(--muted)}
+.setrow .t span.pill{display:inline-block;font-size:10.5px}
 .catlist{display:flex;flex-wrap:wrap;gap:8px}
 .catchip{display:inline-flex;align-items:center;gap:6px;padding:6px 6px 6px 10px;border-radius:20px;background:var(--surface-2);font-size:13px;font-weight:600}
 .catchip i{width:10px;height:10px;border-radius:50%}
 .catchip button{border:0;background:none;width:22px;height:22px;border-radius:50%;cursor:pointer;color:var(--muted)}
 .catchip button:hover{background:var(--line);color:var(--out)}
 
+.sync{display:inline-flex;align-items:center;gap:7px;background:none;border:0;color:inherit;cursor:pointer;font-size:12px;font-weight:600;padding:6px 8px;border-radius:8px;white-space:nowrap}
+.sync i{width:9px;height:9px;border-radius:50%;background:#8f877a;flex:none}
+.sync.ok i{background:#5fbf86}.sync.run i{background:#d6ae66;animation:pulse 1s infinite}.sync.err i{background:#e8806a}
+@keyframes pulse{50%{opacity:.3}}
+.top .sync span{display:none}
+@media (min-width:430px){.top .sync span{display:inline;color:#c9b28a}}
+.side .foot .sync{border:0;justify-content:flex-start;padding:4px 0;color:#d8d2c6}
+.opt{display:grid;gap:4px;text-align:left;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;width:100%}
+.opt:hover{border-color:var(--gold);background:var(--gold-soft)}
+.opt span{font-size:13px;color:var(--muted)}
 /* ---------- Sheet / modal ---------- */
 .ov{position:fixed;inset:0;z-index:50;background:rgba(15,12,8,.5);display:flex;align-items:flex-end;justify-content:center}
 @media (min-width:700px){.ov{align-items:center;padding:24px}}
@@ -226,6 +237,7 @@ main{padding-block:16px 120px;padding-left:max(16px,env(safe-area-inset-left,0px
       <div class="mark"><img src="data:image/jpeg;base64,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" alt=""></div>
       <div class="t">Cantinho Caseiro<small>Controle financeiro</small></div>
       <div class="sp"></div>
+      <button class="sync" data-sync aria-label="Status da sincronização"><i></i><span></span></button>
       <button class="iconbtn" id="lockBtn" aria-label="Sair"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></button>
     </header>
     <main id="main"></main>
@@ -235,6 +247,7 @@ main{padding-block:16px 120px;padding-left:max(16px,env(safe-area-inset-left,0px
 </div>
 <div id="layer"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
 <script>
 "use strict";
@@ -245,7 +258,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const BRL=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
 const brl=v=>BRL.format(v||0);
 const brlK=v=>Math.abs(v)>=1000?'R$ '+(v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mil':brl(v);
-const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const uid=()=>Date.now().toString(36)+'-'+[...crypto.getRandomValues(new Uint8Array(6))].map(x=>x.toString(36).padStart(2,'0')).join('');
 const pad=n=>String(n).padStart(2,'0');
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
 const mk=d=>d.slice(0,7);
@@ -276,72 +289,195 @@ function defaultDB(){
   const e=['Salão (almoço)','Marmitex','Lanchonete','Delivery próprio','iFood e apps','Encomendas e eventos','Outras entradas'];
   return {v:1,lanc:[],
     cats:{saida:s.map(([n,g],i)=>({id:'s'+i,nome:n,grupo:g,cor:PAL[i%PAL.length]})),entrada:e.map((n,i)=>({id:'e'+i,nome:n,cor:PAL[(i*3+1)%PAL.length]}))},
-    formas:['Dinheiro','Pix','Débito','Crédito','Vale-refeição','iFood','Boleto','Transferência']};
+    formas:['Dinheiro','Pix','Débito','Crédito','Vale-refeição','iFood','Boleto','Transferência'],backups:[]};
 }
-let DB=load(K.db,null)||defaultDB();
+let DB=defaultDB(),Q={},META={};
 const UI=Object.assign({view:'painel',mes:mk(today()),donut:'grupo',fTipo:'todos',fCat:'',fBusca:''},load(K.ui,{}));
 UI.mes=UI.mes||mk(today());
-function saveDB(){store(K.db,DB)}
+function saveDB(){if(EMP)store(LK('db'),DB)}
 function saveUI(){store(K.ui,{view:UI.view,donut:UI.donut})}
 const cat=(tipo,id)=>(DB.cats[tipo]||[]).find(c=>c.id===id)||{nome:'Sem categoria',cor:'#8a8478',grupo:'Impostos e outros'};
 const grupoCor=g=>PAL[[1,3,0,4,9][GRUPOS.indexOf(g)]??8];
 const initials=s=>s.split(/\s+/).filter(w=>w.length>2||/^[A-Z]/.test(w)).slice(0,2).map(w=>w[0]).join('').toUpperCase()||s[0].toUpperCase();
 
-/* ---------- Senha ---------- */
-async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-const randCode=()=>{const a='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let s='';const r=crypto.getRandomValues(new Uint8Array(8));r.forEach(x=>s+=a[x%a.length]);return s.slice(0,4)+'-'+s.slice(4)};
-function getSess(){try{return JSON.parse(sessionStorage.getItem(K.sess)||'null')||load(K.sess,null)}catch(e){return load(K.sess,null)}}
-function setSess(keep){const a=load(K.auth,null);const s={t:a.hash.slice(0,20),exp:Date.now()+(keep?30:1)*864e5};
-  try{sessionStorage.setItem(K.sess,JSON.stringify(s))}catch(e){mem[K.sess]=s} if(keep)store(K.sess,s)}
-function logged(){const a=load(K.auth,null),s=getSess();return !!(a&&s&&s.t===a.hash.slice(0,20)&&s.exp>Date.now())}
-let fails=0,lockUntil=0;
+/* ---------- Nuvem (Supabase) ---------- */
+const SB_URL='https://vrraomyvenrqyzsvhwmv.supabase.co';
+const SB_KEY='sb_publishable_DsaGnBmCAiRacqj2C-zlpg_cJJNr1Ya';
+const EMPRESA_SLUG='cantinho-caseiro';
+let SB=null,USER=null,EMP=null,recovering=/type=recovery/.test(location.hash);
+const LK=s=>'cc2_'+EMP.id+'_'+s;
+function saveQ(){if(EMP)store(LK('q'),Q)}
+function saveMeta(){if(EMP)store(LK('meta'),META)}
+function loadLocal(){DB=load(LK('db'),null)||defaultDB();DB.backups=DB.backups||[];Q=load(LK('q'),{});
+  META=Object.assign({since:null,sinceId:'',cfgVer:0,cfgPushed:0,cfgTs:null,lastSync:0,lastBk:0,legacyDone:false},load(LK('meta'),{}))}
+function putMany(list){const idx=new Map(DB.lanc.map((x,i)=>[x.id,i]));const t=Date.now();
+  list.forEach(l=>{const i=idx.get(l.id);if(i!==undefined)DB.lanc[i]=l;else{idx.set(l.id,DB.lanc.length);DB.lanc.push(l)}if(!l.ex)Q[l.id]={...l,upd:t}});
+  saveDB();saveQ();schedSync()}
+function delMany(ids){const set=new Set(ids);const t=Date.now();
+  DB.lanc=DB.lanc.filter(l=>{if(!set.has(l.id))return true;if(!l.ex)Q[l.id]={...l,excluido:true,upd:t};return false});
+  saveDB();saveQ();schedSync()}
+const upsertLanc=l=>putMany([l]);
+const removeLanc=id=>delMany([id]);
+function cfgChanged(){META.cfgVer++;saveMeta();saveDB();schedSync()}
+const toRow=l=>({id:l.id,empresa_id:EMP.id,tipo:l.tipo,valor:l.valor,data:l.data,cat:l.cat||null,forma:l.forma||null,canal:l.canal||null,forn:l.forn||null,
+  descr:l.desc||null,status:l.status==='pendente'?'pendente':'pago',venc:l.venc||null,pago_em:l.pagoEm||null,backup_id:l.backupId||null,excluido:!!l.excluido,criado:l.criado||null});
+const fromRow=r=>({id:r.id,tipo:r.tipo,valor:+r.valor,data:r.data,cat:r.cat||'',forma:r.forma||'',canal:r.canal||'',forn:r.forn||'',desc:r.descr||'',
+  status:r.status||'pago',venc:r.venc||'',pagoEm:r.pago_em||'',backupId:r.backup_id||'',criado:+r.criado||0});
+const KEYS=['tipo','valor','data','cat','forma','canal','forn','desc','status','venc','pagoEm','backupId'];
+const same=(a,b)=>KEYS.every(k=>(a[k]??'')===(b[k]??''));
+function merge(rows){const idx=new Map(DB.lanc.map((x,i)=>[x.id,i]));const del=new Set();let diff=false;
+  rows.forEach(r=>{if(Q[r.id])return;const i=idx.get(r.id);
+    if(r.excluido){if(i!==undefined){del.add(r.id);diff=true}return}
+    const l=fromRow(r);if(i===undefined){idx.set(l.id,DB.lanc.length);DB.lanc.push(l);diff=true}else if(!same(DB.lanc[i],l)){DB.lanc[i]=l;diff=true}});
+  if(del.size)DB.lanc=DB.lanc.filter(l=>!del.has(l.id));return diff}
 
-function authView(mode){
-  const a=load(K.auth,null);mode=mode||(a?'login':'setup');
-  $('#app').hidden=true;const el=$('#auth');el.hidden=false;
+/* Estado da sincronização */
+const SYNC={st:'idle',err:''};
+const pend=()=>Object.keys(Q).length;
+function setSync(st,err){SYNC.st=st;SYNC.err=err||'';paintSync()}
+function syncText(){const n=pend();return({ok:n?'Enviando…':'Sincronizado',run:'Sincronizando…',off:'Sem internet'+(n?` · ${n} pendente${n>1?'s':''}`:''),err:'Falha ao sincronizar',idle:'Conectando…'})[SYNC.st]}
+function paintSync(){const c=SYNC.st==='idle'?'run':SYNC.st,t=syncText();
+  document.querySelectorAll('[data-sync]').forEach(el=>{el.className='sync '+c;el.querySelector('span').textContent=t;el.title=SYNC.err?t+': '+SYNC.err:t});
+  const s=$('#syncInfo');if(s)s.textContent=t+(META.lastSync?' · última vez às '+new Date(META.lastSync).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'')}
+let syncing=false,again=false,stimer=null,pendingRender=false;
+function schedSync(ms=1200){clearTimeout(stimer);stimer=setTimeout(sync,ms);paintSync()}
+async function sync(){
+  if(!SB||!EMP)return;if(syncing){again=true;return}
+  if(!navigator.onLine){setSync('off');return}
+  syncing=true;setSync('run');let changed=false;
+  try{
+    // 1. envia o que mudou neste aparelho
+    const ids=Object.keys(Q);
+    for(let i=0;i<ids.length;i+=300){const part=ids.slice(i,i+300).map(id=>Q[id]).filter(Boolean);
+      const {error}=await SB.from('lancamentos').upsert(part.map(toRow),{onConflict:'id'});if(error)throw error;
+      part.forEach(p=>{if(Q[p.id]&&Q[p.id].upd===p.upd)delete Q[p.id]});saveQ()}
+    // 2. categorias, formas de pagamento e histórico de backups
+    const {data:cfg,error:ce}=await SB.from('config').select('dados,atualizado_em').eq('empresa_id',EMP.id).maybeSingle();if(ce)throw ce;
+    if(META.cfgVer>META.cfgPushed||!cfg){const ver=META.cfgVer;
+      const {data:up,error:ue}=await SB.from('config').upsert({empresa_id:EMP.id,dados:{cats:DB.cats,formas:DB.formas,backups:DB.backups}},{onConflict:'empresa_id'}).select('atualizado_em').single();
+      if(ue)throw ue;META.cfgPushed=ver;META.cfgTs=up.atualizado_em}
+    else if(!META.cfgTs||String(cfg.atualizado_em)>String(META.cfgTs)){const d=cfg.dados||{};
+      if(d.cats)DB.cats=d.cats;if(d.formas)DB.formas=d.formas;DB.backups=d.backups||[];META.cfgTs=cfg.atualizado_em;changed=true}
+    // 3. recebe o que mudou em outros aparelhos
+    for(;;){let q=SB.from('lancamentos').select('*').eq('empresa_id',EMP.id).order('atualizado_em',{ascending:true}).order('id',{ascending:true}).limit(1000);
+      if(META.since)q=q.or(`atualizado_em.gt."${META.since}",and(atualizado_em.eq."${META.since}",id.gt."${META.sinceId}")`);
+      const {data,error}=await q;if(error)throw error;
+      if(data.length){if(merge(data))changed=true;const last=data[data.length-1];META.since=last.atualizado_em;META.sinceId=last.id}
+      if(data.length<1000)break}
+    META.lastSync=Date.now();saveMeta();saveDB();setSync('ok');
+  }catch(e){console.warn('sync',e);saveMeta();setSync(navigator.onLine?'err':'off',e&&e.message||String(e))}
+  finally{syncing=false;if(again){again=false;schedSync(300)}else if(pend()&&SYNC.st==='ok')schedSync(800)}
+  if(changed)softRender()}
+function softRender(){if(!EMP)return;if(layerOpen){pendingRender=true;return}const a=document.activeElement;if(a&&a.id==='fBusca'){pendingRender=true;return}render()}
+window.addEventListener('online',()=>EMP&&schedSync(300));
+window.addEventListener('offline',()=>EMP&&setSync('off'));
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&EMP)schedSync(300)});
+setInterval(()=>{if(document.visibilityState==='visible'&&EMP)sync()},45000);
+
+/* ---------- Login ---------- */
+let fails=0,lockUntil=0;
+const authErr=e=>{const m=(e&&e.message)||'';if(/invalid login/i.test(m))return 'E-mail ou senha incorretos.';if(/not confirmed/i.test(m))return 'Este e-mail ainda não foi confirmado.';
+  if(/fetch|network|load failed/i.test(m)||!navigator.onLine)return 'Sem conexão com a internet. Verifique e tente de novo.';if(/rate|too many/i.test(m))return 'Muitas tentativas. Aguarde alguns minutos.';return 'Não foi possível concluir: '+m};
+function authView(mode,opt){
+  $('#app').hidden=true;const el=$('#auth');el.hidden=false;opt=opt||{};
   const logo=`<div class="auth-logo"><img src="${LOGO}" alt="Cantinho Caseiro — Restaurante e Lanchonete"></div>`;
-  if(mode==='setup'){
-    el.innerHTML=`<form class="auth-card" id="f">${logo}<h1>Primeiro acesso</h1><p class="muted" style="margin:0">Crie o usuário e a senha do administrador. Ela fica guardada só neste aparelho, protegida por criptografia.</p>
-      <div class="field"><label for="u">Usuário</label><input class="inp" id="u" autocomplete="username" required value="admin"></div>
-      <div class="field"><label for="p">Senha (mínimo 6 caracteres)</label><input class="inp" id="p" type="password" autocomplete="new-password" required minlength="6"></div>
-      <div class="field"><label for="p2">Repita a senha</label><input class="inp" id="p2" type="password" autocomplete="new-password" required></div>
-      <div class="err" id="e"></div><button class="btn pri block">Criar acesso</button></form>`;
-    $('#f').onsubmit=async ev=>{ev.preventDefault();const u=$('#u').value.trim(),p=$('#p').value,p2=$('#p2').value;
-      if(p.length<6)return $('#e').textContent='A senha precisa ter pelo menos 6 caracteres.';
-      if(p!==p2)return $('#e').textContent='As duas senhas não são iguais. Digite de novo.';
-      const salt=uid(),code=randCode();
-      store(K.auth,{user:u,salt,hash:await sha(salt+':'+p),rec:await sha(salt+':rec:'+code)});
-      el.innerHTML=`<div class="auth-card">${logo}<h1>Guarde seu código de recuperação</h1><p class="muted" style="margin:0">Se esquecer a senha, é com este código que você cria uma nova. Anote em um lugar seguro, fora do celular.</p>
-        <div class="code">${code}</div><label class="chk"><input type="checkbox" id="ok"> Anotei o código</label><button class="btn pri block" id="go" disabled>Entrar no sistema</button></div>`;
-      $('#ok').onchange=e=>$('#go').disabled=!e.target.checked;
-      $('#go').onclick=()=>{setSess(true);start()};};
-  }else if(mode==='login'){
+  if(mode==='loading'){el.innerHTML=`<div class="auth-card">${logo}<p class="muted" style="margin:0;text-align:center">${esc(opt.m||'Carregando…')}</p></div>`;return}
+  if(mode==='msg'){el.innerHTML=`<div class="auth-card">${logo}<h1>${esc(opt.t)}</h1><p class="muted" style="margin:0">${esc(opt.m)}</p>
+      <button class="btn pri block" id="mA">${opt.reload?'Recarregar':'Tentar de novo'}</button>${opt.out?'<button class="link" id="mB">Entrar com outro usuário</button>':''}</div>`;
+    $('#mA').onclick=()=>opt.reload?location.reload():boot();$('#mB')&&($('#mB').onclick=logout);return}
+  if(mode==='login'){
     el.innerHTML=`<form class="auth-card" id="f">${logo}<h1>Entrar</h1>
-      <div class="field"><label for="u">Usuário</label><input class="inp" id="u" autocomplete="username" value="${esc(a.user)}" required></div>
+      <div class="field"><label for="u">E-mail</label><input class="inp" id="u" type="email" autocomplete="username" inputmode="email" required value="${esc(load('cc2_lastEmail',''))}"></div>
       <div class="field"><label for="p">Senha</label><input class="inp" id="p" type="password" autocomplete="current-password" required></div>
-      <label class="chk"><input type="checkbox" id="keep" checked> Manter conectado neste aparelho por 30 dias</label>
-      <div class="err" id="e"></div><button class="btn pri block">Entrar</button>
+      <div class="err" id="e"></div><button class="btn pri block" id="go">Entrar</button>
       <button type="button" class="link" id="forgot">Esqueci a senha</button></form>`;
-    $('#p').focus();
-    $('#forgot').onclick=()=>authView('reset');
+    ($('#u').value?$('#p'):$('#u')).focus();
+    $('#forgot').onclick=()=>authView('forgot',{email:$('#u').value});
     $('#f').onsubmit=async ev=>{ev.preventDefault();
       if(Date.now()<lockUntil)return $('#e').textContent='Muitas tentativas. Aguarde '+Math.ceil((lockUntil-Date.now())/1000)+' segundos.';
-      const h=await sha(a.salt+':'+$('#p').value);
-      if($('#u').value.trim()===a.user&&h===a.hash){fails=0;setSess($('#keep').checked);start()}
-      else{fails++;if(fails>=5){lockUntil=Date.now()+30000;fails=0}$('#e').textContent='Usuário ou senha incorretos.';$('#p').value='';$('#p').focus()}};
-  }else{
-    el.innerHTML=`<form class="auth-card" id="f">${logo}<h1>Criar nova senha</h1><p class="muted" style="margin:0">Digite o código de recuperação que você anotou no primeiro acesso.</p>
-      <div class="field"><label for="c">Código de recuperação</label><input class="inp" id="c" placeholder="XXXX-XXXX" autocapitalize="characters" required></div>
-      <div class="field"><label for="p">Nova senha</label><input class="inp" id="p" type="password" autocomplete="new-password" required minlength="6"></div>
-      <div class="err" id="e"></div><button class="btn pri block">Salvar nova senha</button><button type="button" class="link" id="back">Voltar</button></form>`;
+      const email=$('#u').value.trim().toLowerCase();$('#go').disabled=true;$('#e').textContent='';
+      const {data,error}=await SB.auth.signInWithPassword({email,password:$('#p').value}).catch(e=>({error:e}));
+      $('#go').disabled=false;
+      if(error){fails++;if(fails>=5){lockUntil=Date.now()+30000;fails=0}$('#e').textContent=authErr(error);$('#p').value='';$('#p').focus();return}
+      fails=0;store('cc2_lastEmail',email);afterLogin(data.session)};
+    return}
+  if(mode==='forgot'){
+    el.innerHTML=`<form class="auth-card" id="f">${logo}<h1>Recuperar senha</h1><p class="muted" style="margin:0">Enviaremos um link para o seu e-mail. Abra o link neste aparelho para criar uma senha nova.</p>
+      <div class="field"><label for="u">E-mail</label><input class="inp" id="u" type="email" autocomplete="username" required value="${esc(opt.email||'')}"></div>
+      <div class="err" id="e"></div><button class="btn pri block" id="go">Enviar link</button><button type="button" class="link" id="back">Voltar</button></form>`;
     $('#back').onclick=()=>authView('login');
-    $('#f').onsubmit=async ev=>{ev.preventDefault();const c=$('#c').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');const code=c.slice(0,4)+'-'+c.slice(4);
-      if(await sha(a.salt+':rec:'+code)!==a.rec)return $('#e').textContent='Código incorreto. Confira as letras e números.';
+    $('#f').onsubmit=async ev=>{ev.preventDefault();const email=$('#u').value.trim().toLowerCase();$('#go').disabled=true;
+      const {error}=await SB.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname}).catch(e=>({error:e}));$('#go').disabled=false;
+      if(error)return $('#e').textContent=authErr(error);
+      el.innerHTML=`<div class="auth-card">${logo}<h1>Confira seu e-mail</h1><p class="muted" style="margin:0">Se <b>${esc(email)}</b> tiver acesso ao sistema, você vai receber um link em alguns minutos. Olhe também a caixa de spam.</p><button class="btn block" id="back">Voltar para o login</button></div>`;
+      $('#back').onclick=()=>authView('login')};
+    return}
+  if(mode==='newpass'){
+    el.innerHTML=`<form class="auth-card" id="f">${logo}<h1>Criar nova senha</h1>
+      <div class="field"><label for="p">Nova senha (mínimo 6 caracteres)</label><input class="inp" id="p" type="password" autocomplete="new-password" required minlength="6"></div>
+      <div class="field"><label for="p2">Repita a nova senha</label><input class="inp" id="p2" type="password" autocomplete="new-password" required></div>
+      <div class="err" id="e"></div><button class="btn pri block" id="go">Salvar e entrar</button></form>`;
+    $('#p').focus();
+    $('#f').onsubmit=async ev=>{ev.preventDefault();
       if($('#p').value.length<6)return $('#e').textContent='A senha precisa ter pelo menos 6 caracteres.';
-      a.hash=await sha(a.salt+':'+$('#p').value);store(K.auth,a);toast('Senha alterada');authView('login')};
+      if($('#p').value!==$('#p2').value)return $('#e').textContent='As duas senhas não são iguais.';
+      $('#go').disabled=true;const {error}=await SB.auth.updateUser({password:$('#p').value}).catch(e=>({error:e}));$('#go').disabled=false;
+      if(error)return $('#e').textContent=authErr(error);
+      recovering=false;try{history.replaceState(null,'',location.pathname)}catch(e){}
+      const {data}=await SB.auth.getSession();toast('Senha alterada');data.session?afterLogin(data.session):authView('login')};
   }
 }
-function logout(){drop(K.sess);authView('login')}
+async function afterLogin(session){
+  USER=session.user;authView('loading',{m:'Abrindo o sistema…'});
+  const ck='cc2_emp_'+USER.id;let emp=load(ck,null),online=true;
+  try{const {data,error}=await SB.from('membros').select('empresa_id,papel,empresas(id,nome,slug)').eq('user_id',USER.id);if(error)throw error;
+    const m=(data||[]).find(x=>x.empresas&&x.empresas.slug===EMPRESA_SLUG);emp=m?{id:m.empresa_id,nome:m.empresas.nome}:null;store(ck,emp)}
+  catch(e){online=false}
+  if(!emp)return authView('msg',online?{t:'Acesso não liberado',m:`O usuário ${USER.email} ainda não está ligado ao Cantinho Caseiro. Peça ao administrador do sistema para liberar o acesso.`,out:true}
+    :{t:'Sem conexão',m:'Conecte-se à internet para entrar pela primeira vez neste aparelho.',out:true});
+  EMP=emp;loadLocal();start();sync();offerLegacy()}
+function offerLegacy(){if(META.legacyDone)return;META.legacyDone=true;saveMeta();
+  const old=load('cc_db_v1',null);const real=old&&Array.isArray(old.lanc)?old.lanc.filter(l=>!l.ex):[];if(!real.length)return;
+  confirmBox('Enviar dados antigos para a nuvem?',`Este aparelho tem ${real.length} lançamento(s) da versão anterior, que funcionava sem internet. Quer enviá-los para a nuvem?`,'Enviar',()=>{
+    const have=new Set(DB.lanc.map(l=>l.id));putMany(real.filter(l=>!have.has(l.id)).map(l=>({...l})));toast('Enviando para a nuvem');render()})}
+function logout(){const go=async()=>{try{await SB.auth.signOut({scope:'local'})}catch(e){}USER=null;EMP=null;DB=defaultDB();Q={};SYNC.st='idle';authView('login')};
+  if(EMP&&pend())return confirmBox('Sair do sistema?',`${pend()} lançamento(s) ainda não foram enviados para a nuvem. Eles ficam guardados neste aparelho e são enviados quando você entrar de novo com internet.`,'Sair mesmo assim',go);
+  go()}
+
+/* ---------- Backup e importação ---------- */
+function bkBanner(){if(!EMP||!DB.lanc.some(l=>!l.ex))return '';const last=META.lastBk||0;const d=last?Math.floor((Date.now()-last)/864e5):null;if(d!==null&&d<7)return '';
+  return `<div class="sample"><span>${d===null?'Você ainda não fez nenhum backup.':`Seu último backup foi há ${d} dias.`} Uma cópia extra protege contra exclusões por engano.</span><button class="btn sm" data-bk>Backup Agora</button></div>`}
+function backup(){const lanc=DB.lanc.filter(l=>!l.ex).map(({upd,...l})=>l);
+  const d={app:'cantinho-caseiro',versao:2,empresa:EMP.nome,gerado:new Date().toISOString(),cats:DB.cats,formas:DB.formas,lanc};
+  fileOut(`backup_cantinho-caseiro_${today()}.json`,new Blob([JSON.stringify(d)],{type:'application/json'}));META.lastBk=Date.now();saveMeta();toast(`Backup gerado com ${lanc.length} lançamento(s)`);render()}
+function importFile(f){const r=new FileReader();r.onload=()=>{let d;try{d=JSON.parse(r.result);if(!d||!Array.isArray(d.lanc))throw 0}catch(e){return toast('Arquivo inválido. Escolha um backup gerado por este sistema.')}
+  const lanc=d.lanc.filter(l=>l&&!l.ex&&l.id&&(l.tipo==='entrada'||l.tipo==='saida')&&/^\d{4}-\d\d-\d\d$/.test(l.data||'')&&+l.valor>0);
+  if(!lanc.length)return toast('Este backup não tem lançamentos para importar.');
+  const have=new Set(DB.lanc.map(l=>l.id));const novos=lanc.filter(l=>!have.has(l.id)).length;
+  const quando=d.gerado?new Date(d.gerado).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}):'data não informada';
+  const atuais=DB.lanc.filter(l=>!l.ex).length;
+  const close=openLayer(`<div class="sheet"><header><h3>Importar backup</h3></header>
+    <p style="margin:0"><b>${esc(f.name)}</b><br><span class="muted">Gerado em ${quando} · ${lanc.length} lançamento(s), ${novos} novo(s) para este sistema.</span></p>
+    <button class="opt" id="imM"><b>Mesclar com os dados atuais</b><span>Adiciona só o que ainda não existe. Nada do que está no sistema é apagado.</span></button>
+    <button class="opt" id="imS"><b>Substituir tudo</b><span>Apaga os ${atuais} lançamento(s) atuais e deixa só os do backup.</span></button>
+    <button class="btn" id="imC">Cancelar</button></div>`);
+  $('#imC').onclick=close;
+  $('#imM').onclick=()=>{close();doImport(d,lanc,f.name,'mesclar')};
+  $('#imS').onclick=()=>{close();confirmBox('Substituir todos os lançamentos?',`Os ${atuais} lançamento(s) atuais serão apagados da nuvem e trocados pelos ${lanc.length} do backup. Se tiver dúvida, faça um Backup Agora antes.`,'Substituir',()=>doImport(d,lanc,f.name,'substituir'))}};
+  r.readAsText(f)}
+function doImport(d,lanc,nome,modo){const bid='bk-'+uid();
+  if(modo==='substituir')delMany(DB.lanc.filter(l=>!l.ex).map(l=>l.id));
+  const have=new Set(DB.lanc.map(l=>l.id));
+  const add=lanc.filter(l=>!have.has(l.id)).map(l=>({id:String(l.id),tipo:l.tipo,valor:Math.round(+l.valor*100)/100,data:l.data,cat:l.cat||'',forma:l.forma||'',canal:l.canal||'',forn:l.forn||'',desc:l.desc||'',
+    status:l.status==='pendente'?'pendente':'pago',venc:l.venc||'',pagoEm:l.pagoEm||'',criado:+l.criado||Date.now(),backupId:bid}));
+  ['saida','entrada'].forEach(t=>{const cur=new Set(DB.cats[t].map(c=>c.id));((d.cats||{})[t]||[]).forEach(c=>{if(c&&c.id&&!cur.has(c.id))DB.cats[t].push(c)})});
+  (d.formas||[]).forEach(f=>{if(f&&!DB.formas.includes(f))DB.formas.push(f)});
+  if(add.length)putMany(add);
+  DB.backups=[{id:bid,arquivo:nome,em:new Date().toISOString(),modo,qtd:add.length,pulados:lanc.length-add.length},...(DB.backups||[])].slice(0,30);cfgChanged();
+  toast(add.length?`${add.length} lançamento(s) importado(s)`:'Nada novo: todos os lançamentos já estavam no sistema');render()}
+function undoImport(bid){const b=DB.backups.find(x=>x.id===bid);if(!b)return;const ids=DB.lanc.filter(l=>l.backupId===bid).map(l=>l.id);
+  confirmBox('Desfazer esta importação?',`${ids.length} lançamento(s) que vieram de “${esc(b.arquivo)}” serão apagados.${b.modo==='substituir'?' Os lançamentos que existiam antes da substituição não voltam; para isso, importe o backup feito antes dela.':''}`,'Desfazer',()=>{
+    delMany(ids);b.desfeito=new Date().toISOString();cfgChanged();toast('Importação desfeita');render()})}
 
 /* ---------- Ícones ---------- */
 const I={
@@ -368,11 +504,12 @@ function start(){
   $('#side').innerHTML=`<div class="brand"><img src="${LOGO}" alt="Cantinho Caseiro"></div>
     ${VIEWS.map(([k,n])=>`<button class="nav" data-v="${k}">${svg(k,20)}<span>${n}</span>${k==='contas'?'<span class="dot" data-badge hidden></span>':''}</button>`).join('')}
     <button class="btn add" id="addSide">${svg('plus',18)} Novo lançamento</button>
-    <div class="foot"><span>Conectado como <b>${esc(load(K.auth,{}).user)}</b></span><button id="outSide">Sair do sistema</button></div>`;
+    <div class="foot"><button class="sync" data-sync><i></i><span></span></button><span>Conectado como <b>${esc(USER.email)}</b></span><button id="outSide">Sair do sistema</button></div>`;
   $('#tabs').innerHTML=VIEWS.map(([k,n])=>`<button class="tab" data-v="${k}">${svg(k)}<span>${n}</span>${k==='contas'?'<span class="dot" data-badge hidden></span>':''}</button>`).join('');
   document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>go(b.dataset.v));
   $('#fab').onclick=$('#addSide').onclick=()=>form();
   $('#lockBtn').onclick=$('#outSide').onclick=logout;
+  document.querySelectorAll('[data-sync]').forEach(b=>b.onclick=()=>{toast(syncText());sync()});
   render();
 }
 function go(v){UI.view=v;saveUI();render();window.scrollTo(0,0)}
@@ -380,10 +517,12 @@ function render(){
   document.querySelectorAll('[data-v]').forEach(b=>b.setAttribute('aria-current',b.dataset.v===UI.view?'page':'false'));
   const n=urgentes().length;document.querySelectorAll('[data-badge]').forEach(d=>{d.hidden=!n;d.textContent=n});
   const m=$('#main');({painel:vPainel,lanc:vLanc,contas:vContas,rel:vRel,ajustes:vAjustes}[UI.view]||vPainel)(m);
+  if(UI.view!=='ajustes'){const bk=bkBanner();if(bk){m.insertAdjacentHTML('afterbegin',bk);m.querySelector('[data-bk]').onclick=backup}}
+  paintSync();
 }
 const monthPicker=()=>`<div class="month"><button data-m="-1" aria-label="Mês anterior">‹</button><span>${mesNome(UI.mes)}</span><button data-m="1" aria-label="Próximo mês">›</button></div>`;
 function bindMonth(){document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{UI.mes=addMonth(UI.mes,+b.dataset.m);render()})}
-const sampleBar=()=>DB.lanc.some(l=>l.ex)?`<div class="sample"><span>Você está vendo <b>dados de exemplo</b> para conhecer o sistema.</span><button class="btn sm" id="clrEx">Apagar exemplos e começar</button></div>`:'';
+const sampleBar=()=>DB.lanc.some(l=>l.ex)?`<div class="sample"><span>Você está vendo <b>dados de exemplo</b>. Eles ficam só neste aparelho e não vão para a nuvem.</span><button class="btn sm" id="clrEx">Apagar exemplos e começar</button></div>`:'';
 function bindSample(){const b=$('#clrEx');if(b)b.onclick=()=>confirmBox('Apagar os dados de exemplo?','Só os lançamentos de exemplo serão removidos. O que você lançou continua.','Apagar exemplos',()=>{DB.lanc=DB.lanc.filter(l=>!l.ex);saveDB();toast('Exemplos apagados');render()})}
 
 /* ---------- Painel ---------- */
@@ -494,7 +633,7 @@ function vContas(m){
   :`<section class="card empty"><b>Nenhuma conta pendente</b><span>Lance aluguel, fornecedores e boletos com a opção “A pagar” para receber alertas antes do vencimento.</span><button class="btn pri" id="nova2">Lançar conta a pagar</button></section>`}`;
   bindSample();
   document.querySelectorAll('button.t[data-id]').forEach(b=>b.onclick=()=>form(DB.lanc.find(l=>l.id===b.dataset.id)));
-  document.querySelectorAll('[data-pay]').forEach(b=>b.onclick=()=>{const l=DB.lanc.find(x=>x.id===b.dataset.pay);l.status='pago';l.venc=l.data;l.pagoEm=today();l.data=today();saveDB();toast('Conta marcada como paga');render()});
+  document.querySelectorAll('[data-pay]').forEach(b=>b.onclick=()=>{const l=DB.lanc.find(x=>x.id===b.dataset.pay);l.status='pago';l.venc=l.data;l.pagoEm=today();l.data=today();upsertLanc(l);toast('Conta marcada como paga');render()});
   $('#nova').onclick=()=>form(null,'saida',true);$('#nova2')&&($('#nova2').onclick=()=>form(null,'saida',true));
 }
 
@@ -537,41 +676,48 @@ function sixChart(months,R){const W=560,H=220,pl=50,pb=24,pt=10;const max=niceMa
 
 /* ---------- Ajustes ---------- */
 function vAjustes(m){
-  const a=load(K.auth,{});const n=DB.lanc.length;
+  const reais=DB.lanc.filter(l=>!l.ex).length,temEx=DB.lanc.some(l=>l.ex);
+  const bks=(DB.backups||[]);
+  const quando=iso=>new Date(iso).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});
   m.innerHTML=`<div class="head"><h2>Ajustes</h2></div>
-  <section class="card"><h3>Dados e backup</h3><div class="set">
-    <div class="setrow"><div class="t"><b>Exportar para Excel</b><span>Planilha com todos os lançamentos, pronta para o contador.</span></div><button class="btn" id="xls">Baixar Excel</button></div>
-    <div class="setrow"><div class="t"><b>Fazer backup</b><span>Os dados ficam neste aparelho. Faça backup toda semana e guarde no Drive ou WhatsApp.</span></div><button class="btn" id="bk">Baixar backup</button></div>
-    <div class="setrow"><div class="t"><b>Restaurar backup</b><span>Use para passar os dados para outro aparelho ou recuperar uma cópia.</span></div><label class="btn" for="imp">Escolher arquivo</label><input type="file" id="imp" accept=".json,application/json" hidden></div>
-    <div class="setrow"><div class="t"><b>${n} lançamento(s) salvos</b><span>${DB.lanc.some(l=>l.ex)?'Inclui dados de exemplo.':'Somente dados reais.'}</span></div>${DB.lanc.some(l=>l.ex)?'<button class="btn" id="clrEx2">Apagar exemplos</button>':'<button class="btn" id="seedB">Carregar exemplos</button>'}</div>
+  <section class="card"><h3>Nuvem e acesso</h3><div class="set">
+    <div class="setrow"><div class="t"><b>Sincronização</b><span id="syncInfo"></span></div><button class="btn" id="syncNow">Sincronizar agora</button></div>
+    <div class="setrow"><div class="t"><b>${esc(USER.email)}</b><span>${esc(EMP.nome)} · ${reais} lançamento(s) na nuvem</span></div><button class="btn" id="pw">Trocar senha</button></div>
+    <div class="setrow"><div class="t"><b>Sair do sistema</b><span>Pede e-mail e senha na próxima vez neste aparelho.</span></div><button class="btn" id="out2">Sair</button></div>
   </div></section>
+  <section class="card"><h3>Backup e importação</h3><div class="set">
+    <div class="setrow"><div class="t"><b>Backup Agora</b><span>${META.lastBk?'Último backup neste aparelho: '+quando(META.lastBk):'Nenhum backup feito neste aparelho ainda.'} Guarde o arquivo no Drive ou no WhatsApp.</span></div><button class="btn pri" id="bk">Backup Agora</button></div>
+    <div class="setrow"><div class="t"><b>Importar backup</b><span>Traz lançamentos de um arquivo de backup. Você escolhe entre mesclar ou substituir.</span></div><label class="btn" for="imp">Escolher arquivo</label><input type="file" id="imp" accept=".json,application/json" hidden></div>
+    <div class="setrow"><div class="t"><b>Exportar para Excel</b><span>Planilha com todos os lançamentos e um resumo por mês, pronta para o contador.</span></div><button class="btn" id="xls">Baixar Excel</button></div>
+  </div>
+  ${bks.length?`<div class="lbl" style="margin:14px 0 4px">Backups importados</div><div class="rows">${bks.map(b=>`<div class="setrow"><div class="t"><b>${esc(b.arquivo)}</b><span>${quando(b.em)} · ${b.modo==='substituir'?'substituiu os dados':'mesclado'} · ${b.qtd} importado(s)${b.pulados?`, ${b.pulados} já existiam`:''}${b.desfeito?' · <span class="pill bad">Desfeito</span>':''}</span></div>${b.desfeito||!b.qtd?'':`<button class="btn sm" data-undo="${b.id}">Desfazer</button>`}</div>`).join('')}</div>`:''}
+  </section>
+  <section class="card"><h3>Dados de exemplo</h3><div class="setrow" style="border:0"><div class="t"><b>${temEx?'Exemplos carregados':'Conhecer o sistema com exemplos'}</b><span>Os exemplos ficam só neste aparelho e nunca vão para a nuvem.</span></div>${temEx?'<button class="btn" id="clrEx2">Apagar exemplos</button>':'<button class="btn" id="seedB">Carregar exemplos</button>'}</div></section>
   <section class="card"><h3>Categorias de saída</h3>${GRUPOS.map(g=>`<div style="margin-bottom:12px"><div class="lbl" style="margin-bottom:6px">${g}</div><div class="catlist">${DB.cats.saida.filter(c=>c.grupo===g).map(c=>`<span class="catchip"><i style="background:${c.cor}"></i>${esc(c.nome)}<button data-delc="saida:${c.id}" aria-label="Remover ${esc(c.nome)}">×</button></span>`).join('')}</div></div>`).join('')}
     <form class="filters" id="addS" style="margin-top:6px"><input class="inp" id="nsN" placeholder="Nova categoria de saída" required><select class="inp" id="nsG" aria-label="Grupo">${GRUPOS.map(g=>`<option>${g}</option>`).join('')}</select><button class="btn">Adicionar</button></form></section>
   <section class="card"><h3>Categorias de entrada</h3><div class="catlist">${DB.cats.entrada.map(c=>`<span class="catchip"><i style="background:${c.cor}"></i>${esc(c.nome)}<button data-delc="entrada:${c.id}" aria-label="Remover ${esc(c.nome)}">×</button></span>`).join('')}</div>
     <form class="filters" id="addE" style="margin-top:12px"><input class="inp" id="neN" placeholder="Nova categoria de entrada" required><button class="btn">Adicionar</button></form></section>
   <section class="card"><h3>Formas de pagamento</h3><div class="catlist">${DB.formas.map((f,i)=>`<span class="catchip">${esc(f)}<button data-delf="${i}" aria-label="Remover ${esc(f)}">×</button></span>`).join('')}</div>
     <form class="filters" id="addF" style="margin-top:12px"><input class="inp" id="nfN" placeholder="Nova forma (ex.: Sodexo)" required><button class="btn">Adicionar</button></form></section>
-  <section class="card"><h3>Acesso</h3><div class="set">
-    <div class="setrow"><div class="t"><b>Usuário: ${esc(a.user)}</b><span>Trocar a senha encerra o acesso em outros navegadores deste aparelho.</span></div><button class="btn" id="pw">Trocar senha</button></div>
-    <div class="setrow"><div class="t"><b>Sair do sistema</b><span>Pede a senha na próxima vez.</span></div><button class="btn" id="out2">Sair</button></div>
-    <div class="setrow"><div class="t"><b>Apagar tudo</b><span>Remove todos os lançamentos deste aparelho. Faça um backup antes.</span></div><button class="btn danger" id="wipe">Apagar tudo</button></div>
-  </div></section>`;
+  <section class="card"><h3>Zona de cuidado</h3><div class="setrow" style="border:0"><div class="t"><b>Apagar todos os lançamentos</b><span>Remove da nuvem e de todos os aparelhos. Faça um Backup Agora antes.</span></div><button class="btn danger" id="wipe">Apagar tudo</button></div></section>`;
+  paintSync();
+  $('#syncNow').onclick=()=>sync();
   $('#xls').onclick=exportXLS;$('#bk').onclick=backup;
-  $('#imp').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.lanc)||!d.cats)throw 0;
-    confirmBox('Restaurar este backup?',`O arquivo tem ${d.lanc.length} lançamento(s). Os dados atuais deste aparelho serão substituídos.`,'Restaurar',()=>{DB=d;saveDB();toast('Backup restaurado');render()})}catch(err){toast('Arquivo inválido. Escolha um backup gerado por este sistema.')}};r.readAsText(f);e.target.value=''};
+  $('#imp').onchange=e=>{const f=e.target.files[0];if(f)importFile(f);e.target.value=''};
+  document.querySelectorAll('[data-undo]').forEach(b=>b.onclick=()=>undoImport(b.dataset.undo));
   $('#clrEx2')&&($('#clrEx2').onclick=()=>{DB.lanc=DB.lanc.filter(l=>!l.ex);saveDB();toast('Exemplos apagados');render()});
-  $('#seedB')&&($('#seedB').onclick=()=>{seed();toast('Exemplos carregados');render()});
+  $('#seedB')&&($('#seedB').onclick=()=>{seed();toast('Exemplos carregados neste aparelho');render()});
   document.querySelectorAll('[data-delc]').forEach(b=>b.onclick=()=>{const[t,id]=b.dataset.delc.split(':');const used=DB.lanc.filter(l=>l.cat===id).length;
     if(DB.cats[t].length<=1)return toast('Mantenha pelo menos uma categoria.');
-    confirmBox('Remover categoria?',used?`${used} lançamento(s) usam esta categoria e vão aparecer como “Sem categoria”.`:'Nenhum lançamento usa esta categoria.','Remover',()=>{DB.cats[t]=DB.cats[t].filter(c=>c.id!==id);saveDB();render()})});
-  document.querySelectorAll('[data-delf]').forEach(b=>b.onclick=()=>{DB.formas.splice(+b.dataset.delf,1);saveDB();render()});
+    confirmBox('Remover categoria?',used?`${used} lançamento(s) usam esta categoria e vão aparecer como “Sem categoria”.`:'Nenhum lançamento usa esta categoria.','Remover',()=>{DB.cats[t]=DB.cats[t].filter(c=>c.id!==id);cfgChanged();render()})});
+  document.querySelectorAll('[data-delf]').forEach(b=>b.onclick=()=>{DB.formas.splice(+b.dataset.delf,1);cfgChanged();render()});
   const used=()=>new Set([...DB.cats.saida,...DB.cats.entrada].map(c=>c.cor));
   const nextCor=()=>PAL.find(c=>!used().has(c))||PAL[Math.floor(Math.random()*PAL.length)];
-  $('#addS').onsubmit=e=>{e.preventDefault();DB.cats.saida.push({id:uid(),nome:$('#nsN').value.trim(),grupo:$('#nsG').value,cor:nextCor()});saveDB();toast('Categoria adicionada');render()};
-  $('#addE').onsubmit=e=>{e.preventDefault();DB.cats.entrada.push({id:uid(),nome:$('#neN').value.trim(),cor:nextCor()});saveDB();toast('Categoria adicionada');render()};
-  $('#addF').onsubmit=e=>{e.preventDefault();DB.formas.push($('#nfN').value.trim());saveDB();render()};
+  $('#addS').onsubmit=e=>{e.preventDefault();DB.cats.saida.push({id:uid(),nome:$('#nsN').value.trim(),grupo:$('#nsG').value,cor:nextCor()});cfgChanged();toast('Categoria adicionada');render()};
+  $('#addE').onsubmit=e=>{e.preventDefault();DB.cats.entrada.push({id:uid(),nome:$('#neN').value.trim(),cor:nextCor()});cfgChanged();toast('Categoria adicionada');render()};
+  $('#addF').onsubmit=e=>{e.preventDefault();DB.formas.push($('#nfN').value.trim());cfgChanged();render()};
   $('#pw').onclick=pwBox;$('#out2').onclick=logout;
-  $('#wipe').onclick=()=>confirmBox('Apagar todos os lançamentos?','Esta ação não pode ser desfeita. Categorias e senha continuam.','Apagar tudo',()=>{DB.lanc=[];saveDB();toast('Lançamentos apagados');render()});
+  $('#wipe').onclick=()=>confirmBox('Apagar todos os lançamentos?',`Os ${reais} lançamento(s) serão apagados da nuvem e de todos os aparelhos. Categorias e acesso continuam.`,'Apagar tudo',()=>{delMany(DB.lanc.filter(l=>!l.ex).map(l=>l.id));toast('Lançamentos apagados');render()});
 }
 function fileOut(name,blob){const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
 function backup(){fileOut(`cantinho-caseiro-backup-${today()}.json`,new Blob([JSON.stringify(DB)],{type:'application/json'}));toast('Backup gerado')}
@@ -586,7 +732,7 @@ function exportXLS(){if(!window.XLSX)return toast('Excel indisponível sem inter
 /* ---------- Formulário de lançamento ---------- */
 let layerOpen=false;
 function openLayer(html,onclose){const L=$('#layer');L.innerHTML=`<div class="ov" id="ov">${html}</div>`;layerOpen=true;
-  const close=()=>{L.innerHTML='';layerOpen=false;onclose&&onclose()};
+  const close=()=>{L.innerHTML='';layerOpen=false;onclose&&onclose();if(pendingRender){pendingRender=false;setTimeout(render,0)}};
   $('#ov').onclick=e=>{if(e.target.id==='ov')close()};
   document.onkeydown=e=>{if(e.key==='Escape'&&layerOpen)close()};
   return close}
@@ -621,19 +767,18 @@ function form(l,tipo,aPagar){
   document.querySelectorAll('.typesw button').forEach(b=>b.onclick=()=>{keep();l.tipo=b.dataset.on;if(l.tipo==='entrada')l.status='pago';draw()});
   $('#xx').onclick=close;
   if(novo)setTimeout(()=>$('#fv').focus(),80);
-  $('#del')&&($('#del').onclick=()=>{close();confirmBox('Excluir lançamento?',`${esc(l.desc||cat(l.tipo,l.cat).nome)} · ${brl(l.valor)}`,'Excluir',()=>{DB.lanc=DB.lanc.filter(x=>x.id!==l.id);saveDB();toast('Lançamento excluído');render()})});
+  $('#del')&&($('#del').onclick=()=>{close();confirmBox('Excluir lançamento?',`${esc(l.desc||cat(l.tipo,l.cat).nome)} · ${brl(l.valor)}`,'Excluir',()=>{removeLanc(l.id);toast('Lançamento excluído');render()})});
   $('#lf').onsubmit=e=>{e.preventDefault();keep();l.valor=parseValor($('#fv').value);
     if(!(l.valor>0))return $('#fe').textContent='Digite um valor maior que zero.';
     if(!l.cat)return $('#fe').textContent='Escolha uma categoria.';
     if(!l.data)return $('#fe').textContent='Informe a data.';
     l.desc=l.desc.trim();if(l.forn)l.forn=l.forn.trim();
     if(l.tipo==='entrada'){delete l.forn;l.status='pago'}
-    delete l.ex;
-    if(novo){const rep=+($('#fr')?.value||0);l.id=uid();l.criado=Date.now();DB.lanc.push(l);
-      for(let i=1;i<=rep;i++)DB.lanc.push({...l,id:uid(),criado:Date.now()+i,data:addMonthDate(l.data,i),status:'pendente'});
+    if(novo){const rep=+($('#fr')?.value||0);l.id=uid();l.criado=Date.now();const lote=[l];
+      for(let i=1;i<=rep;i++)lote.push({...l,id:uid(),criado:Date.now()+i,data:addMonthDate(l.data,i),status:'pendente'});putMany(lote);
       toast(rep?`Salvo e repetido por mais ${rep} mês(es)`:'Lançamento salvo')}
-    else{const i=DB.lanc.findIndex(x=>x.id===l.id);DB.lanc[i]=l;toast('Alterações salvas')}
-    saveDB();close();if(mk(l.data)!==UI.mes&&UI.view!=='contas'&&novo)UI.mes=mk(l.data);render()};
+    else{upsertLanc(l);toast('Alterações salvas')}
+    close();if(mk(l.data)!==UI.mes&&UI.view!=='contas'&&novo)UI.mes=mk(l.data);render()};
 }
 function confirmBox(title,msg,ok,fn){const close=openLayer(`<div class="sheet" role="alertdialog" aria-labelledby="ct"><header><h3 id="ct">${esc(title)}</h3></header><p class="muted" style="margin:0">${msg}</p><div class="actions"><button class="btn" id="cn">Cancelar</button><button class="btn pri" id="cy">${esc(ok)}</button></div></div>`);
   $('#cn').onclick=close;$('#cy').onclick=()=>{close();fn()};$('#cy').focus()}
@@ -641,13 +786,17 @@ function pwBox(){const close=openLayer(`<form class="sheet" id="pf"><header><h3>
   <div class="field"><label for="p0">Senha atual</label><input class="inp" type="password" id="p0" autocomplete="current-password" required></div>
   <div class="field"><label for="p1">Nova senha</label><input class="inp" type="password" id="p1" autocomplete="new-password" required minlength="6"></div>
   <div class="field"><label for="p2">Repita a nova senha</label><input class="inp" type="password" id="p2" autocomplete="new-password" required></div>
-  <div class="err" id="pe"></div><div class="actions"><button type="button" class="btn" id="pc">Cancelar</button><button class="btn pri">Salvar senha</button></div></form>`);
+  <div class="err" id="pe"></div><div class="actions"><button type="button" class="btn" id="pc">Cancelar</button><button class="btn pri" id="ps">Salvar senha</button></div></form>`);
   $('#pc').onclick=close;
-  $('#pf').onsubmit=async e=>{e.preventDefault();const a=load(K.auth,null);
-    if(await sha(a.salt+':'+$('#p0').value)!==a.hash)return $('#pe').textContent='A senha atual está incorreta.';
+  $('#pf').onsubmit=async e=>{e.preventDefault();
     if($('#p1').value.length<6)return $('#pe').textContent='A nova senha precisa ter pelo menos 6 caracteres.';
     if($('#p1').value!==$('#p2').value)return $('#pe').textContent='As duas senhas novas não são iguais.';
-    a.hash=await sha(a.salt+':'+$('#p1').value);store(K.auth,a);setSess(true);close();toast('Senha alterada')}}
+    $('#ps').disabled=true;
+    const chk=await SB.auth.signInWithPassword({email:USER.email,password:$('#p0').value}).catch(e=>({error:e}));
+    if(chk.error){$('#ps').disabled=false;return $('#pe').textContent=/invalid login/i.test(chk.error.message||'')?'A senha atual está incorreta.':authErr(chk.error)}
+    const {error}=await SB.auth.updateUser({password:$('#p1').value}).catch(e=>({error:e}));$('#ps').disabled=false;
+    if(error)return $('#pe').textContent=authErr(error);
+    close();toast('Senha alterada')}}
 let tt;function toast(t){let el=$('.toast');if(!el){el=document.createElement('div');el.className='toast';el.setAttribute('role','status');document.body.appendChild(el)}el.textContent=t;el.hidden=false;clearTimeout(tt);tt=setTimeout(()=>el.hidden=true,2600)}
 
 /* ---------- Dados de exemplo ---------- */
@@ -688,7 +837,13 @@ function seed(){
 }
 
 /* ---------- Início ---------- */
-function boot(){if(load(K.auth,null)&&logged())start();else authView()}
+async function boot(){
+  if(!window.supabase||!window.supabase.createClient)return authView('msg',{t:'Sem conexão',m:'Não foi possível carregar o sistema. Verifique a internet e recarregue a página.',reload:true});
+  if(!SB){SB=supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'cc-auth'}});
+    SB.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY'){recovering=true;authView('newpass')}})}
+  authView('loading');let session=null;try{session=(await SB.auth.getSession()).data.session}catch(e){}
+  if(recovering){if(session)authView('newpass');else authView('login');return}
+  if(session)afterLogin(session);else authView('login')}
 boot();
 if('serviceWorker' in navigator&&location.protocol==='https:'&&!/claude/.test(location.hostname)){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
 </script>
