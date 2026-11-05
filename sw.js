@@ -1,4 +1,4 @@
-const C='cantinho-v2';
+const C='cantinho-v3';
 const A=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./icon-180.png'];
 const CDN=['cdn.jsdelivr.net','cdnjs.cloudflare.com','fonts.googleapis.com','fonts.gstatic.com'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(A)));self.skipWaiting()});
